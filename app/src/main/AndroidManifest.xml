@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="pt.jonny4547.customwatchface">
+
+    <!-- Required to act as a custom watch face. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <!-- Required for complications to receive complication data and open the provider chooser. -->
+    <uses-permission android:name="com.google.android.wearable.permission.RECEIVE_COMPLICATION_DATA"/>
+
+    <uses-feature android:name="android.hardware.type.watch"/>
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <meta-data
+                android:name="com.google.android.wearable.standalone"
+                android:value="true"/>
+
+        <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+
+        <uses-library
+                android:name="com.google.android.wearable"
+                android:required="false"/>
+
+        <service
+                android:name=".CustomWatchFace"
+                android:label="@string/app_name"
+                android:permission="android.permission.BIND_WALLPAPER"
+                android:exported="true">
+            <meta-data
+                    android:name="android.service.wallpaper"
+                    android:resource="@xml/watch_face"/>
+            <meta-data
+                    android:name="com.google.android.wearable.watchface.preview"
+                    android:resource="@drawable/preview"/>
+            <meta-data
+                    android:name="com.google.android.wearable.watchface.preview_circular"
+                    android:resource="@drawable/preview_circular"/>
+            <meta-data
+                    android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                    android:value="pt.jonny4547.customwatchface.CONFIG"/>
+
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService"/>
+
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE"/>
+            </intent-filter>
+        </service>
+
+        <activity
+                android:name=".CustomWatchFaceConfigActivity"
+                android:label="@string/app_name"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="pt.jonny4547.customwatchface.CONFIG"/>
+
+                <category android:name="com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name="android.support.wearable.complications.ComplicationHelperActivity"/>
+    </application>
+
+</manifest>
